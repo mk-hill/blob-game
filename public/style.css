@@ -2,10 +2,12 @@
   --color-1: #008ae6;
   --color-2: #00aa39;
   --color-3: #a0a0a0;
+  --color-white: #fff;
+  --color-black: #000;
 }
 
 body {
-  background-color: black;
+  background-color: var(--color-black);
   overflow: hidden;
 }
 
@@ -21,7 +23,7 @@ h3 {
 #score-wrapper {
   min-width: 120px;
   background-color: var(--color-3);
-  color: black;
+  color: var(--color-black);
   font-size: 23px;
   opacity: 0.7;
   position: absolute;
@@ -34,7 +36,7 @@ h3 {
 #leader-board-wrapper {
   min-width: 160px;
   background-color: var(--color-1);
-  color: white;
+  color: var(--color-white);
   font-size: 18px;
   opacity: 0.7;
   position: absolute;
@@ -57,7 +59,7 @@ h3 {
   width: 33.33%;
   text-align: center;
   float: left;
-  border-top: solid 2px black;
+  border-top: solid 2px var(--color-black);
 }
 
 .sort-option:hover {
@@ -70,13 +72,13 @@ h3 {
 }
 
 #sort-blobs {
-  border-left: solid 2px black;
-  border-right: solid 2px black;
+  border-left: solid 2px var(--color-black);
+  border-right: solid 2px var(--color-black);
 }
 
 canvas {
   display: block;
-  background-color: white;
+  background-color: var(--color-white);
 }
 
 .modal-sm {
@@ -86,7 +88,7 @@ canvas {
 
 .modal-content {
   margin-top: 100px;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-radius: 10px;
 }
 
@@ -111,7 +113,7 @@ canvas {
   margin: 5px auto 5px;
   width: 90%;
   background-color: var(--color-1);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 #join-team-btn,
@@ -124,11 +126,11 @@ canvas {
   font-size: 18px;
   display: inline-block;
   background-color: var(--color-1);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 #play-solo-btn:hover {
-  color: #000;
+  color: var(--color-black);
 }
 
 #create-team-btn,
@@ -139,7 +141,7 @@ canvas {
 
 .btn-github {
   background-image: url('/images/github-light-32.png') !important;
-  color: #fff;
+  color: var(--color-white);
   background-color: #444;
   border-color: rgba(0, 0, 0, 0.2);
   background-repeat: no-repeat;
@@ -155,7 +157,7 @@ canvas {
   font-size: 18px;
   display: inline-block;
   background-color: var(--color-2);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 #create-button {
@@ -164,7 +166,7 @@ canvas {
   margin: 5px auto 5px;
   width: 90%;
   background-color: var(--color-3);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 #playerStats-all-btn,
@@ -174,7 +176,7 @@ canvas {
   margin: 5px auto 5px;
   width: 90%;
   background-color: var(--color-2);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .stats-btn-wrapper,
@@ -229,7 +231,7 @@ canvas {
 }
 
 .join-button {
-  color: white;
+  color: var(--color-white);
   background-color: var(--color-1);
   margin-right: 10px;
 }
@@ -249,7 +251,7 @@ canvas {
   font-size: 20px;
   border-radius: 5px;
   padding: 5px 15px;
-  color: white;
+  color: var(--color-white);
   background-color: var(--color-2);
   margin: auto;
   opacity: 0;

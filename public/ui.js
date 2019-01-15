@@ -21,5 +21,5 @@ $('.start-game').click((e) => {
   $('.modal').modal('hide');
   // Show game ui
   document.querySelectorAll('.hiddenOnStart').forEach(elem => elem.removeAttribute('hidden'));
-  // init();
+  init(); // In canvas.js until bundled
 });
