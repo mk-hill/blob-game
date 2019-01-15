@@ -13,8 +13,8 @@ player.x = Math.floor(500 * Math.random() + 10);
 player.y = Math.floor(500 * Math.random() + 10);
 
 function draw() {
-  context.clearRect(0, 0, canvas.width, canvas.height); // wipe prior frame
   context.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+  context.clearRect(0, 0, canvas.width, canvas.height); // wipe prior frame
 
   // Lock view on player blob
   const viewX = canvas.width / 2 - player.x;
@@ -27,10 +27,19 @@ function draw() {
   // Draw arc around
   // Params (center x, center y, radius, starting angle, ending angle)
   context.arc(player.x, player.y, 10, 0, Math.PI * 2);
+  // context.arc(100, 100, 10, 0, Math.PI * 2);
   context.fill();
   context.lineWidth = 3;
   context.strokeStyle = 'rgb(240,240,0)'; // border
   context.stroke();
+
+  // Draw 'npc' blobs
+  player.blobs.forEach((blob) => {
+    context.beginPath(); // separate start for each blob
+    context.fillStyle = blob.color;
+    context.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+    context.fill();
+  });
 
   requestAnimationFrame(draw); // keep drawing
 }
