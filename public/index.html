@@ -4,9 +4,166 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Blob game</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <title>Blob Game</title>
   </head>
   <body>
-    <h1>Hello World</h1>
+    <div id="container">
+      <div id="game-field" class="col-sm-12">
+        <canvas id="game-canvas" style="background: url('images/pattern.png')">
+          <!-- drawing goes here -->
+        </canvas>
+        <div id="score-wrapper" class="hiddenOnStart" hidden>
+          <div>Score: <span class="player-score"></span></div>
+        </div>
+        <div id="leader-board-wrapper" class="hiddenOnStart" hidden>
+          <div id="leader-board">
+            <h3 class="text-center">Leaders</h3>
+            <hr />
+            <ol class="leader-board">
+              <li class="leaderboard-player"></li>
+            </ol>
+            <hr />
+          </div>
+          <div id="sort-wrapper">
+            <div id="sort-header" class="text-center">SORT BY</div>
+            <div id="sort-score" class="sort-option active">Score</div>
+            <div id="sort-blobs" class="sort-option">Blobs</div>
+            <div id="sort-players" class="sort-option">Players</div>
+          </div>
+        </div>
+        <div id="game-message-wrapper">
+          <div id="game-message">{{ gameMessage }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+            <h2 class="modal-title text-center">Blob</h2>
+          </div>
+          <div class="modal-body">
+            <button type="submit" class="btn play-button btn-github">
+              Login with github
+            </button>
+            <form class="name-form">
+              <div class="text-center error-message"></div>
+              <button type="submit" class="btn play-button play-guest">
+                Play as Guest
+              </button>
+              <input
+                id="name-input"
+                class="text-input text-center form-control"
+                type="text"
+                name="name-input"
+                placeholder="Enter your name here"
+                required
+              />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div id="instructions">
+              <label id="how-to-play">How to play:</label>
+              <ul>
+                <li>Your blob follows your mouse.</li>
+                <li>Absorb smaller blobs to grow your blob.</li>
+                <li>The larger you get the slower you move.</li>
+                <li>
+                  Avoid being absorbed by other players with larger blobs.
+                </li>
+                <li>
+                  Tip: Absorbing other players increases your size without the
+                  speed penalty.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- START MODAL -->
+    <div id="spawnModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+            <h2 class="modal-title text-center">Blob</h2>
+          </div>
+          <div class="modal-body">
+            <h3 class="text-center">
+              Hello, <span class="player-name"></span>!
+            </h3>
+            <div class="play-btn-wrapper">
+              <button
+                id="join-team-btn"
+                type="button"
+                class="btn play-button"
+                disabled
+              >
+                Join a Team
+              </button>
+              <button
+                id="play-solo-btn"
+                type="button"
+                class="btn play-button start-game"
+              >
+                Play Solo
+              </button>
+            </div>
+            <div class="stats-btn-wrapper">
+              <button type="button" class="btn stats-btn player-stats-btn">
+                Your Stats
+              </button>
+              <button type="button" class="btn stats-btn all-stats-btn">
+                All Stats
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div id="instructions">
+              <label id="how-to-play">How to play:</label>
+              <ul>
+                <li>Your blob follows your mouse.</li>
+                <li>Absorb smaller blobs to grow your blob.</li>
+                <li>The larger you get the slower you move.</li>
+                <li>
+                  Avoid being absorbed by other players with larger blobs.
+                </li>
+                <li>
+                  Tip: Absorbing other players increases your size without the
+                  speed penalty.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
+      integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw"
+      crossorigin="anonymous"
+    ></script>
+    <script src="ui.js"></script>
   </body>
 </html>
