@@ -13,6 +13,31 @@ class Player {
     this.public = new PublicData(name);
     this.private = new PrivateData();
   }
+
+  // Update vectors with data from client and return current vectors
+  // Extend to modify vectors before returning if needed
+  updateVectors(data) {
+    const { xVector, yVector } = data;
+    this.private.xVector = xVector;
+    this.private.yVector = yVector;
+    return data;
+  }
+
+  get x() {
+    return this.public.x;
+  }
+
+  get y() {
+    return this.public.y;
+  }
+
+  set x(val) {
+    this.public.x = val;
+  }
+
+  set y(val) {
+    this.public.y = val;
+  }
 }
 
 // Private player data for use between server and player themselves

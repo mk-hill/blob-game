@@ -2,7 +2,7 @@ const state = {
   name: 'Guest',
   blobs: [],
   players: [],
-};
+}; // Only vectors and name to be stored here, position/speed/collision server-side
 
 const canvas = document.querySelector('#game-canvas');
 const context = canvas.getContext('2d');
