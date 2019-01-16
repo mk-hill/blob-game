@@ -6,6 +6,7 @@
 const { ioServer: server } = require('../createServers'); // Grab ioServer from servers/index.js
 
 const { Blob, Player } = require('../classes');
+const { checkForBlobCollisions } = require('../collision');
 
 const blobs = Blob.create();
 const players = [];
@@ -33,7 +34,7 @@ server.on('connect', (socket) => {
     // Update every connected socket 30 times per second - 33ms
     // ! sending same player.x, player.y to everyone + duplicating interval on server for
     // ! each player this way - split server.to and socket or grab correct x,y in client
-    // ! or assign id in public data on server instead
+    // ! or assign id in public data on server and move this back out instead
     setInterval(() => {
       server.to('game').emit('tock', {
         players, // Send every player's public info to this player
@@ -45,6 +46,15 @@ server.on('connect', (socket) => {
     // Player sent a tick with their vectors
     socket.on('tick', (vectors) => {
       player.updateLocation(vectors);
+      const absorbedBlob = checkForBlobCollisions(player, blobs);
+      absorbedBlob
+        .then((blobIndex) => {
+          // collision happened, emit the orb to be replaced to all sockets
+          server.to('game').emit('blobAbsorbed', { blobIndex, newBlob: blobs[blobIndex] });
+        })
+        .catch((e) => {
+          // console.log(e);
+        });
     });
   });
 });

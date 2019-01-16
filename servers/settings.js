@@ -10,10 +10,10 @@ module.exports = {
     borderWidth: 3, // player blob border width
   },
 
-  fieldWidth: 1000, // playable area width
-  fieldHeight: 1000, // playable area height
+  fieldWidth: 5000, // playable area width
+  fieldHeight: 5000, // playable area height
 
-  blobs: 500, // number of blobs to populate the field with
+  blobs: 5000, // number of blobs to populate the field with
   minRadius: 4, // min npc blob radius
   maxRadius: 5, // max npc blob radius
 };

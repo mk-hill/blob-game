@@ -29,3 +29,9 @@ socket.on('tock', ({ players, x, y }) => {
   state.x = x;
   state.y = y;
 });
+
+// Someone absorbed a blob and it has been replaced. Update state for correct paint
+socket.on('blobAbsorbed', ({ blobIndex, newBlob }) => {
+  console.log(blobIndex, newBlob);
+  state.blobs.splice(blobIndex, 1, newBlob);
+});

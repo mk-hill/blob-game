@@ -73,6 +73,9 @@ class PublicData {
     this.radius = playerDefaults.radius;
     this.score = 0;
 
+    this.blobsAbsorbed = 0;
+    this.playersAbsorbed = 0;
+
     // This data doesn't change after player creation
     // Don't need to send it all each tock, could split
     this.color = random.color; // could be extended with customization
