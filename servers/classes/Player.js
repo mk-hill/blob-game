@@ -1,9 +1,7 @@
 /**
  * All player data
  */
-const {
-  playerDefaults: { speed, radius, zoom },
-} = require('../settings');
+const { playerDefaults, fieldHeight, fieldWidth } = require('../settings');
 const { random } = require('../util');
 
 // Master player class to hold all data, including socket ID for server side only
@@ -14,13 +12,17 @@ class Player {
     this.private = new PrivateData();
   }
 
-  // Update vectors with data from client and return current vectors
-  // Extend to modify vectors before returning if needed
-  updateVectors(data) {
-    const { xVector, yVector } = data;
+  updateLocation(vectors) {
+    const { speed } = this.private;
+    const { xVector, yVector } = vectors;
+
+    // Update vectors
     this.private.xVector = xVector;
     this.private.yVector = yVector;
-    return data;
+
+    // Location validated in setters
+    this.x += speed * xVector;
+    this.y -= speed * yVector;
   }
 
   get x() {
@@ -32,11 +34,23 @@ class Player {
   }
 
   set x(val) {
-    this.public.x = val;
+    if (val > fieldWidth) {
+      this.public.x = fieldWidth;
+    } else if (val < 0) {
+      this.public.x = 0;
+    } else {
+      this.public.x = val;
+    }
   }
 
   set y(val) {
-    this.public.y = val;
+    if (val > fieldHeight) {
+      this.public.y = fieldHeight;
+    } else if (val < 0) {
+      this.public.y = 0;
+    } else {
+      this.public.y = val;
+    }
   }
 }
 
@@ -45,8 +59,8 @@ class PrivateData {
   constructor() {
     this.xVector = 0;
     this.yVector = 0;
-    this.speed = speed;
-    this.zoom = zoom;
+    this.speed = playerDefaults.speed;
+    this.zoom = playerDefaults.zoom;
   }
 }
 
@@ -56,9 +70,14 @@ class PublicData {
     this.name = name;
     this.x = random.x; // Random starting coords
     this.y = random.y;
-    this.color = random.color; // could be extended with customization
-    this.radius = radius;
+    this.radius = playerDefaults.radius;
     this.score = 0;
+
+    // This data doesn't change after player creation
+    // Don't need to send it all each tock, could split
+    this.color = random.color; // could be extended with customization
+    this.borderColor = random.color;
+    this.borderWidth = playerDefaults.borderWidth;
   }
 }
 

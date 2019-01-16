@@ -21,16 +21,19 @@ const players = [];
 
 // A player has connected
 server.on('connect', (socket) => {
-  let player = {};
+  // let player = {};
   // Player started game
   socket.on('init', (data) => {
     socket.join('game'); // Add player to game namespace
-    player = new Player(socket.id, data.playerName);
+    const player = new Player(socket.id, data.playerName);
     players.push(player.public); // store public data in array to be sent to every client
     // console.log(players);
     socket.emit('initAck', blobs); // send blobs on map to new player
 
     // Update every connected socket 30 times per second - 33ms
+    // ! sending same player.x, player.y to everyone + duplicating interval on server for
+    // ! each player this way - split server.to and socket or grab correct x,y in client
+    // ! or assign id in public data on server instead
     setInterval(() => {
       server.to('game').emit('tock', {
         players, // Send every player's public info to this player
@@ -41,20 +44,7 @@ server.on('connect', (socket) => {
 
     // Player sent a tick with their vectors
     socket.on('tick', (vectors) => {
-      const { speed } = player.private;
-      const { xVector, yVector } = player.updateVectors(vectors);
-      // console.log(xVector, yVector, player.x, player.y);
-
-      // Only move while player is not trying to go off grid
-      // todo change based on field size setting
-      if ((player.x < 5 && xVector < 0) || (player.x > 500 && xVector > 0)) {
-        player.y -= speed * yVector;
-      } else if ((player.y < 5 && yVector > 0) || (player.y > 500 && yVector < 0)) {
-        player.x += speed * xVector;
-      } else {
-        player.x += speed * xVector;
-        player.y -= speed * yVector;
-      }
+      player.updateLocation(vectors);
     });
   });
 });

@@ -46,8 +46,8 @@ function draw() {
     // Params (center x, center y, radius, starting angle, ending angle)
     context.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
     context.fill();
-    context.lineWidth = 3;
-    context.strokeStyle = 'rgb(240,240,0)'; // border
+    context.lineWidth = player.borderWidth;
+    context.strokeStyle = player.borderColor; // border
     context.stroke();
   });
 
