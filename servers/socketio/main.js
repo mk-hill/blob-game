@@ -8,6 +8,7 @@ const { ioServer: server } = require('../createServers'); // Grab ioServer from 
 const { Blob, Player } = require('../classes');
 
 const blobs = Blob.create();
+const players = [];
 
 // function startGame() {
 //   // todo Creating blobs, adjust for multiple players later
@@ -19,10 +20,14 @@ const blobs = Blob.create();
 // startGame();
 
 server.on('connect', (socket) => {
-  // A player has connected, create new Player
-  const player = new Player(socket.id);
-  // console.log(player);
-  socket.emit('start', blobs);
+  // A player has connected
+  socket.on('init', (data) => {
+    // Player started game
+    const player = new Player(socket.id, data.playerName);
+    players.push(player.public);
+    console.log(players);
+    socket.emit('initAck', blobs);
+  });
 });
 
 module.exports = server;

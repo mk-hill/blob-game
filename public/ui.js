@@ -1,4 +1,8 @@
-const player = {};
+const state = {
+  name: 'Guest',
+  blobs: [],
+  players: [],
+};
 
 const canvas = document.querySelector('#game-canvas');
 const context = canvas.getContext('2d');
@@ -11,15 +15,15 @@ $(window).load(() => {
 
 $('.name-form').submit((e) => {
   e.preventDefault();
-  player.name = document.querySelector('#name-input').value;
+  state.name = document.querySelector('#name-input').value;
   $('#loginModal').modal('hide');
   $('#spawnModal').modal('show');
-  document.querySelector('.player-name').textContent = player.name;
+  document.querySelector('.player-name').textContent = state.name;
 });
 
 $('.start-game').click((e) => {
   $('.modal').modal('hide');
   // Show game ui
   document.querySelectorAll('.hiddenOnStart').forEach(elem => elem.removeAttribute('hidden'));
-  init(); // In canvas.js until bundled
+  init(); // In socket.js until bundled
 });

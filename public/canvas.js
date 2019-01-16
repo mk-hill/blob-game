@@ -1,7 +1,3 @@
-function init() {
-  draw();
-}
-
 //
 // ─── DRAWING ────────────────────────────────────────────────────────────────────
 // * Dummy data to be replaced later
@@ -9,16 +5,16 @@ function init() {
 // todo ensure proper ui pointer events so player can move normally while mousing over
 
 // Random starting coords
-player.x = Math.floor(500 * Math.random() + 10);
-player.y = Math.floor(500 * Math.random() + 10);
+state.x = Math.floor(500 * Math.random() + 10);
+state.y = Math.floor(500 * Math.random() + 10);
 
 function draw() {
   context.setTransform(1, 0, 0, 1, 0, 0); // reset transform
   context.clearRect(0, 0, canvas.width, canvas.height); // wipe prior frame
 
   // Lock view on player blob
-  const viewX = canvas.width / 2 - player.x;
-  const viewY = canvas.height / 2 - player.y;
+  const viewX = canvas.width / 2 - state.x;
+  const viewY = canvas.height / 2 - state.y;
   context.translate(viewX, viewY); // is cumulative, needs to be reset
 
   context.beginPath(); // start drawing
@@ -26,7 +22,7 @@ function draw() {
 
   // Draw arc around
   // Params (center x, center y, radius, starting angle, ending angle)
-  context.arc(player.x, player.y, 10, 0, Math.PI * 2);
+  context.arc(state.x, state.y, 10, 0, Math.PI * 2);
   // context.arc(100, 100, 10, 0, Math.PI * 2);
   context.fill();
   context.lineWidth = 3;
@@ -34,7 +30,7 @@ function draw() {
   context.stroke();
 
   // Draw 'npc' blobs
-  player.blobs.forEach((blob) => {
+  state.blobs.forEach((blob) => {
     context.beginPath(); // separate start for each blob
     context.fillStyle = blob.color;
     context.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
@@ -79,12 +75,12 @@ canvas.addEventListener('mousemove', (e) => {
   yV = yVector;
 
   // Only move while player is not trying to go off grid
-  if ((player.x < 5 && player.xVector < 0) || (player.x > 500 && xV > 0)) {
-    player.y -= speed * yV;
-  } else if ((player.y < 5 && yV > 0) || (player.y > 500 && yV < 0)) {
-    player.x += speed * xV;
+  if ((state.x < 5 && state.xVector < 0) || (state.x > 500 && xV > 0)) {
+    state.y -= speed * yV;
+  } else if ((state.y < 5 && yV > 0) || (state.y > 500 && yV < 0)) {
+    state.x += speed * xV;
   } else {
-    player.x += speed * xV;
-    player.y -= speed * yV;
+    state.x += speed * xV;
+    state.y -= speed * yV;
   }
 });
