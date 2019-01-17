@@ -6,7 +6,7 @@
 const { ioServer: server } = require('../createServers'); // Grab ioServer from servers/index.js
 
 const { Blob, Player } = require('../classes');
-const { checkForBlobCollisions } = require('../collision');
+const { checkForBlobCollisions, checkForPlayerCollisions } = require('../collision');
 
 const blobs = Blob.create();
 const players = [];
