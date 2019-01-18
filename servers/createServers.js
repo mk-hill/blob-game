@@ -14,7 +14,7 @@ app.use(helmet());
 
 const expressServer = app.listen(59768); // todo set env port before deploying
 
-// Bind socket.io to http server
+// Bind socket.io to fttp server
 const server = socketio(expressServer);
 
 module.exports = {

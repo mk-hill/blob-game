@@ -10,8 +10,10 @@ function init() {
 }
 
 // No need to receive data before start game is clicked
-socket.on('initAck', (blobs) => {
+socket.on('initAck', ({ blobs, id }) => {
   state.blobs = blobs;
+  state.id = id;
+  console.log(id);
   // Inform server of vectors 30 times per second
   // Server to handle position/collision
   setInterval(() => {
@@ -19,19 +21,22 @@ socket.on('initAck', (blobs) => {
       xVector: state.xVector,
       yVector: state.yVector,
     });
-  }, 33);
+  }, 15);
 });
 
 // Receive players array and new location from server every 33ms
-socket.on('tock', ({ players, x, y }) => {
+socket.on('tock', (players) => {
   // console.log(players);
   state.players = players;
-  state.x = x;
-  state.y = y;
+
+  // Update camera location
+  const self = players.find(player => player.id === state.id);
+  state.x = self.x;
+  state.y = self.y;
 });
 
 // Someone absorbed a blob and it has been replaced. Update state for correct paint
 socket.on('blobAbsorbed', ({ blobIndex, newBlob }) => {
-  console.log(blobIndex, newBlob);
+  // console.log(blobIndex, newBlob);
   state.blobs.splice(blobIndex, 1, newBlob);
 });

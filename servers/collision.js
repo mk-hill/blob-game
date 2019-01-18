@@ -24,7 +24,7 @@ function checkForBlobCollisions(player, blobs) {
         && player.y < blob.y + pub.radius + blob.radius
       ) {
         // Pythagoras test(circle)
-        distance = Math.sqrt(
+        const distance = Math.sqrt(
           (player.x - blob.x) * (player.x - blob.x) + (player.y - blob.y) * (player.y - blob.y),
         );
         if (distance < pub.radius + blob.radius) {
@@ -61,7 +61,7 @@ function checkForPlayerCollisions(player, players) {
   return new Promise((resolve, reject) => {
     // PLAYER COLLISIONS
     players.forEach((p2, i) => {
-      if (p2.uid != pub.uid) {
+      if (p2.id != pub.id) {
         // console.log(p2.uid,pub.uid)
         const pR = p2.radius;
         // AABB Test - Axis-aligned bounding boxes
@@ -72,7 +72,9 @@ function checkForPlayerCollisions(player, players) {
           && pub.y < p2.y + pub.radius + pR
         ) {
           // Pythagoras test
-          distance = Math.sqrt((pub.x - p2.x) * (pub.x - p2.x) + (pub.y - p2.y) * (pub.y - p2.y));
+          const distance = Math.sqrt(
+            (pub.x - p2.x) * (pub.x - p2.x) + (pub.y - p2.y) * (pub.y - p2.y),
+          );
           if (distance < pub.radius + pR) {
             // COLLISION
             if (pub.radius > pR) {
@@ -83,16 +85,19 @@ function checkForPlayerCollisions(player, players) {
               }
               players.splice(i, 1);
               resolve(collisionData);
-            } else if (pub.radius < pR) {
-              const collisionData = updateScores(p2, player);
-              players.forEach((p, i) => {
-                console.log(players[i].name, i);
-                if (pub.uid == p.uid) {
-                  players.splice(i, 1);
-                }
-              });
-              resolve(collisionData);
             }
+            // Not necessary since other player will tick shortly as well,
+            // everyone can check for their own kills
+            //   else if (pub.radius < pR) {
+            //     const collisionData = updateScores(p2, player);
+            //     players.forEach((p, i) => {
+            //       console.log(players[i].name, i);
+            //       if (pub.uid === p.uid) {
+            //         players.splice(i, 1);
+            //       }
+            //     });
+            //     resolve(collisionData);
+            //   }
           }
         }
       }

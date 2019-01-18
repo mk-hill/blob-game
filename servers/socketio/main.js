@@ -20,6 +20,13 @@ const players = [];
 
 // startGame();
 
+// Update every connected socket 30 times per second - 33ms
+setInterval(() => {
+  if (players.length) {
+    server.to('game').emit('tock', players); // Send every player's public info to every player
+  }
+}, 15);
+
 // A player has connected
 server.on('connect', (socket) => {
   // let player = {};
@@ -29,19 +36,14 @@ server.on('connect', (socket) => {
     const player = new Player(socket.id, data.playerName);
     players.push(player.public); // store public data in array to be sent to every client
     // console.log(players);
-    socket.emit('initAck', blobs); // send blobs on map to new player
-
-    // Update every connected socket 30 times per second - 33ms
-    // ! sending same player.x, player.y to everyone + duplicating interval on server for
-    // ! each player this way - split server.to and socket or grab correct x,y in client
-    // ! or assign id in public data on server and move this back out instead
-    setInterval(() => {
-      server.to('game').emit('tock', {
-        players, // Send every player's public info to this player
-        x: player.x, // Send this players coordinates
-        y: player.y,
-      });
-    }, 33);
+    socket.emit('initAck', { blobs, id: player.id }); // send blobs on map to new player
+    // setInterval(() => {
+    //   socket.emit('cameraUpdate', {
+    //     // could find in client side by sending ids for players
+    //     x: player.x,
+    //     y: player.y,
+    //   });
+    // }, 12);
 
     // Player sent a tick with their vectors
     socket.on('tick', (vectors) => {
@@ -51,6 +53,15 @@ server.on('connect', (socket) => {
         .then((blobIndex) => {
           // collision happened, emit the orb to be replaced to all sockets
           server.to('game').emit('blobAbsorbed', { blobIndex, newBlob: blobs[blobIndex] });
+        })
+        .catch((e) => {
+          // console.log(e);
+        });
+      const playerDeath = checkForPlayerCollisions(player, players);
+      playerDeath
+        .then((data) => {
+          // Players collided
+          console.log(data);
         })
         .catch((e) => {
           // console.log(e);
