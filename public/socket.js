@@ -13,15 +13,19 @@ function init() {
 socket.on('initAck', ({ blobs, id }) => {
   state.blobs = blobs;
   state.id = id;
-  console.log(id);
-  // Inform server of vectors 30 times per second
+  // console.log(id);
+
+  // Inform server of vectors 30 times per second?
   // Server to handle position/collision
   setInterval(() => {
     socket.emit('tick', {
       xVector: state.xVector,
       yVector: state.yVector,
     });
-  }, 15);
+  }, 5);
+
+  // Don't need to update ui as often
+  setInterval(updateHUD, 300);
 });
 
 // Receive players array and new location from server every 33ms

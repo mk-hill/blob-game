@@ -22,6 +22,7 @@ module.exports.random = {
   },
 
   get radius() {
-    return Math.floor(Math.random() * (maxRadius - minRadius) + minRadius);
+    // return Math.round(Math.random() * (maxRadius - minRadius) + minRadius);
+    return +(Math.random() * (maxRadius - minRadius) + minRadius).toFixed(1);
   },
 };

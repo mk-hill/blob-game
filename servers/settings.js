@@ -4,7 +4,7 @@
 
 module.exports = {
   playerDefaults: {
-    speed: 3, // player start speed
+    speed: 1, // player start speed
     radius: 7, // player start size
     zoom: 1.6, // default player viewport zoom, will be changed as player grows
     borderWidth: 3, // player blob border width

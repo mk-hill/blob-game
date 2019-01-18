@@ -20,12 +20,12 @@ const players = [];
 
 // startGame();
 
-// Update every connected socket 30 times per second - 33ms
+// Update every connected socket 30 times per second? - 33ms
 setInterval(() => {
   if (players.length) {
     server.to('game').emit('tock', players); // Send every player's public info to every player
   }
-}, 15);
+}, 5);
 
 // A player has connected
 server.on('connect', (socket) => {
