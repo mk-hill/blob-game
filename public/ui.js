@@ -6,6 +6,7 @@ const state = {
 
 const scoreBoard = document.querySelector('.player-score');
 const leaderBoard = document.querySelector('.leader-board');
+const endMessage = document.querySelector('#game-message');
 const canvas = document.querySelector('#game-canvas');
 const context = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -35,12 +36,24 @@ function updateHUD() {
   const self = state.players.find(player => player.id === state.id);
   scoreBoard.textContent = self.score;
   leaderBoard.innerHTML = '';
-  console.log(state.players);
+
+  // Only showing top 10, as if we will have more concurrent players
   state.players
     .sort((p1, p2) => p2.score - p1.score)
+    .slice(0, 11)
     .forEach((player) => {
       const li = document.createElement('li');
-      li.textContent = player.name;
+      li.textContent = `${player.name}: ${player.score}`;
+      if (player.id === state.id) {
+        li.style.textDecoration = 'underline';
+      }
       leaderBoard.appendChild(li);
     });
+}
+
+function showMessage(absorber, absorbed) {
+  endMessage.textContent = `${absorbed.name} absorbed ${absorber.name}!`;
+  $('#game-message').css({ background: 'fff', opacity: 1 });
+  $('#game-message').show();
+  $('#game-message').fadeOut(3000);
 }

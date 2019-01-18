@@ -4,11 +4,13 @@
 const { playerDefaults, fieldHeight, fieldWidth } = require('../settings');
 const { random } = require('../util');
 
+const uuid = require('uuid/v4');
+
 // Master player class to hold all data,
-// ! Socket id added to public data, generate separate uuid instead if this turns out to be a problem
 class Player {
   constructor(socketId, name = 'Guest') {
-    this.public = new PublicData(socketId, name);
+    this.socketId = socketId;
+    this.public = new PublicData(name);
     this.private = new PrivateData();
   }
 
@@ -70,8 +72,8 @@ class PrivateData {
 
 // Player data that is to be shared with all other players
 class PublicData {
-  constructor(id, name) {
-    this.id = id;
+  constructor(name) {
+    this.id = uuid();
     this.name = name;
     this.x = random.x; // Random starting coords
     this.y = random.y;

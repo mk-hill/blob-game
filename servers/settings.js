@@ -12,7 +12,7 @@ module.exports = {
 
   absorption: {
     blobScore: 1, // score per 'npc' blob eaten
-    speedTick: 0.005, // speed loss increment
+    speedTick: 0.001, // speed loss increment
     sizeTick: 0.25, // size increase per 'npc' blob eaten
     playerSizeMult: 0.25, // how much of a players size you gain when you eat them
     playerScoreBonus: 10, // bonus score gained for eating a player
@@ -23,6 +23,6 @@ module.exports = {
   fieldHeight: 1000, // playable area height
 
   blobs: 500, // number of blobs to populate the field with
-  minRadius: 4, // min npc blob radius
+  minRadius: 3, // min npc blob radius
   maxRadius: 5, // max npc blob radius
 };

@@ -44,3 +44,11 @@ socket.on('blobAbsorbed', ({ blobIndex, newBlob }) => {
   // console.log(blobIndex, newBlob);
   state.blobs.splice(blobIndex, 1, newBlob);
 });
+
+socket.on('playerAbsorbed', ({ absorber, absorbed }) => {
+  showMessage(absorber, absorbed);
+  if (absorbed.id === state.id) {
+    socket.disconnect();
+    // do stuff
+  }
+});

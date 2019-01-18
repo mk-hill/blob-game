@@ -114,8 +114,8 @@ function updateScores({ public: eater }, eaten) {
   eaten.isAlive = false;
   eater.radius += eaten.radius * playerSizeMult;
   return {
-    died: eaten,
-    eatenBy: eater,
+    absorbed: eaten,
+    absorber: eater,
   };
 }
 

@@ -29,21 +29,13 @@ setInterval(() => {
 
 // A player has connected
 server.on('connect', (socket) => {
-  // let player = {};
   // Player started game
   socket.on('init', (data) => {
     socket.join('game'); // Add player to game namespace
     const player = new Player(socket.id, data.playerName);
     players.push(player.public); // store public data in array to be sent to every client
-    // console.log(players);
+
     socket.emit('initAck', { blobs, id: player.id }); // send blobs on map to new player
-    // setInterval(() => {
-    //   socket.emit('cameraUpdate', {
-    //     // could find in client side by sending ids for players
-    //     x: player.x,
-    //     y: player.y,
-    //   });
-    // }, 12);
 
     // Player sent a tick with their vectors
     socket.on('tick', (vectors) => {
@@ -59,13 +51,21 @@ server.on('connect', (socket) => {
         });
       const playerDeath = checkForPlayerCollisions(player, players);
       playerDeath
-        .then((data) => {
+        .then((collidingPlayers) => {
           // Players collided
-          console.log(data);
+          server.to('game').emit('playerAbsorbed', collidingPlayers);
         })
         .catch((e) => {
           // console.log(e);
         });
+    });
+
+    // Only need to do something on dc if player had started the game
+    socket.on('disconnect', () => {
+      const playerIndex = players.findIndex(p => player.socketId === p.socketId);
+      if (playerIndex > 0) {
+        players.splice(playerIndex, 1); // remove player
+      }
     });
   });
 });
