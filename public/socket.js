@@ -13,7 +13,6 @@ function init() {
 socket.on('initAck', ({ blobs, id }) => {
   state.blobs = blobs;
   state.id = id;
-  // console.log(id);
 
   // Inform server of vectors 30 times per second?
   // Server to handle position/collision
@@ -30,7 +29,6 @@ socket.on('initAck', ({ blobs, id }) => {
 
 // Receive players array and new location from server every 33ms
 socket.on('tock', (players) => {
-  // console.log(players);
   state.players = players;
 
   // Update camera location
@@ -41,7 +39,6 @@ socket.on('tock', (players) => {
 
 // Someone absorbed a blob and it has been replaced. Update state for correct paint
 socket.on('blobAbsorbed', ({ blobIndex, newBlob }) => {
-  // console.log(blobIndex, newBlob);
   state.blobs.splice(blobIndex, 1, newBlob);
 });
 

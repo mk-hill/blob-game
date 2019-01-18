@@ -16,7 +16,7 @@ module.exports = {
     sizeTick: 0.25, // size increase per 'npc' blob eaten
     playerSizeMult: 0.25, // how much of a players size you gain when you eat them
     playerScoreBonus: 10, // bonus score gained for eating a player
-    minSpeed: 0.01, // minimum player speed
+    minSpeed: 0.02, // minimum player speed
   },
 
   fieldWidth: 1000, // playable area width

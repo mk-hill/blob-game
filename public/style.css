@@ -256,3 +256,7 @@ canvas {
   margin: auto;
   opacity: 0;
 }
+
+#game-canvas {
+  background: url('./images/pattern.png');
+}

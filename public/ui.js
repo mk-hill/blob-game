@@ -19,15 +19,10 @@ $(window).load(() => {
 $('.name-form').submit((e) => {
   e.preventDefault();
   state.name = document.querySelector('#name-input').value;
-  $('#loginModal').modal('hide');
-  $('#spawnModal').modal('show');
-  document.querySelector('.player-name').textContent = state.name;
-});
-
-$('.start-game').click((e) => {
   $('.modal').modal('hide');
   // Show game ui
   document.querySelectorAll('.hiddenOnStart').forEach(elem => elem.removeAttribute('hidden'));
+  state.name = document.querySelector('#name-input').value;
   init(); // In socket.js until bundled
 });
 
